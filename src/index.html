@@ -19,17 +19,50 @@
   <script src="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js"></script>
 
   <title>Coleirinha Branca</title>
+
+  <style>
+    .site-header {
+      background: #000;
+    }
+
+    .site-header a {
+      color: #FFF !important;
+    }
+  </style>
 </head>
 
 <body>
   <header>
+    <nav class="site-header sticky-top py-1">
+      <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <a class="py-2" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img"
+            viewBox="0 0 24 24" focusable="false">
+            <title>Product</title>
+            <circle cx="12" cy="12" r="10"></circle>
+            <path
+              d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94">
+            </path>
+          </svg>
+        </a>
+        <a id="testa-deputados" class="py-2 d-none d-md-inline-block" href="#">Deputados</a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Senadores</a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Favoritos</a>
+      </div>
+    </nav>
     <title></title>
-    <button id="testa-blocos" class="btn btn-primary" name="testa-blocos">Blocos</button>
-    <button id="testa-deputados" class="btn btn-primary" name="testa-deputados">Deputados</button>
+    <!-- <button id="testa-blocos" class="btn btn-primary" name="testa-blocos">Blocos</button>
+    <button id="testa-deputados" class="btn btn-primary" name="testa-deputados">Deputados</button> -->
 
   </header>
   <main>
-
+    <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style="background:#dadada !important">
+      <div class="col-md-5 p-lg-5 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">Coleirinha Branca</h1>
+        <p class="lead font-weight-normal">Consulte seu politico</p>
+      </div>
+    </div>
     <div class="container">
       <section>
         <table class="table" id="tabela-deputados" style="display: none;">
@@ -45,7 +78,7 @@
 
           </tbody>
         </table>
-        
+
         <!-- Modal -->
         <div class="modal fade" id="modal-tabela-deputados" tabindex="-1" role="dialog"
           aria-labelledby="modal-tabela-deputadosLabel" aria-hidden="true">
@@ -58,50 +91,100 @@
                 </button>
               </div>
               <div class="modal-body">
+
                 <div class="row">
                   <div class="col-sm-4">
-                    <label><b>CPF</b></label>
-                    <div id="cpf">000000</div>
+                    <div class="row ">
+                      <div class="col-sm-12 text-center">
+                        <img id="foto" style="max-width: 150px;" src="">
+                        <hr>
+                      </div>
+                    </div>
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link active" id="v-pills-dados-pessoais-tab" data-toggle="pill"
+                        href="#v-pills-dados-pessoais" role="tab" aria-controls="v-pills-dados-pessoais"
+                        aria-selected="true">Dados Pessoais</a>
+                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                        aria-controls="v-pills-profile" aria-selected="false">Proposições</a>
+                      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
+                        role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+                      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
+                        role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+                    </div>
                   </div>
-                  <div class="col-sm-4">
-                    <label><b>Data de Falecimento</b></label>
-                    <div id="data-falecimento">000000</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <label><b>Data de Nascimento</b></label>
-                    <div id="data-nascimento">000000</div>
+                  <div class="col-sm-8">
+                    <div class="tab-content" id="v-pills-tabContent">
+                      <div class="tab-pane fade show active" id="v-pills-dados-pessoais" role="tabpanel"
+                        aria-labelledby="v-pills-dados-pessoais-tab">
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label><b>Nome Civil</b></label>
+                            <div id="nome-civil"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <label><b>Data de Nascimento</b></label>
+                            <div id="data-nascimento"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <label><b>Data de Falecimento</b></label>
+                            <div id="data-falecimento"></div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label><b>CPF</b></label>
+                            <div id="cpf"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <label><b>UF Nascimento</b></label>
+                            <div id="uf-nascimento"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <label><b>Município de Nascimento</b></label>
+                            <div id="municipio-nascimento"></div>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-4">
+                            <label><b>Escolaridade</b></label>
+                            <div id="escolaridade"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <label><b>Sexo</b></label>
+                            <div id="sexo"></div>
+                          </div>
+                          <div class="col-sm-4">
+                            <label><b>Rede Social</b></label>
+                            <div id="rede-social"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
+                        <table class="table" id="tabela-proposicoes">
+                          <thead class="table-dark">
+                            <tr>
+                              <th>Ano</th>
+                              <th>Ementa</th>
+                              <th>Número</th>
+                              <th>Sigla</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                        aria-labelledby="v-pills-messages-tab">c</div>
+                      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                        aria-labelledby="v-pills-settings-tab">d</div>
+                    </div>
                   </div>
                 </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <label><b>Escolaridade</b></label>
-                    <div id="escolaridade">000000</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <label><b>Município de Nascimento</b></label>
-                    <div id="municipio-nascimento">000000</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <label><b>Nome Civil</b></label>
-                    <div id="nome-civil">000000</div>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <label><b>Rede Social</b></label>
-                    <div id="rede-social">000000</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <label><b>Sexo</b></label>
-                    <div id="sexo">000000</div>
-                  </div>
-                  <div class="col-sm-4">
-                    <label><b>UF Nascimento</b></label>
-                    <div id="uf-nascimento">000000</div>
-                  </div>
-                </div>
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
