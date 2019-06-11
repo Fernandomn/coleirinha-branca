@@ -1,19 +1,17 @@
-urlRoot = 'http://legis.senado.gov.br/dadosabertos/'
-urlSenador = 'senador/'
-urlListaAtual = 'lista/atual/'
-$.support.cors = true
-
 $('#bt-nav-senadores').click((event) => {
   event.preventDefault()
   $.ajax({
     url: urlRoot + urlSenador + urlListaAtual,
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      "access-control-allow-origin": "*",
+    },
     type: 'GET',
     crossDomain: true,
-
-    success: (result) => {
+    success: function (result) {
       console.log(result)
     },
-    error: (err) => {
+    error: function (err) {
       console.error("erro: ", err)
     }
   })
