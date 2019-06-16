@@ -12,6 +12,14 @@ var urlSenador = 'senador/'
 var urlListaAtual = 'lista/atual/'
 jQuery.support.cors = true;
 
+// accordion
+//$('.breakrow').click(function(){
+criaClick = function () {
+  $('.clickable').on('click', function () {
+    console.log('criaClick')
+    $(this).next().toggle();
+  });
+}
 // $('#testa-blocos').click(function () {
 //   $.ajax(
 //     {

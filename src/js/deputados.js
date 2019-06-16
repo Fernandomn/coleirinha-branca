@@ -13,6 +13,12 @@ var respProp = {}
 var respEvent = {}
 var respDesp = {}
 
+var dateOptions = {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+};
+
 $('#bt-nav-deputados').click(function (e) {
   e.preventDefault()
   $.ajax({
@@ -51,11 +57,14 @@ carregaDados = function (url, id) {
     type: 'GET',
     success: function (resp) {
       // console.log(resp.dados)
+      let dataNascimento = new Date(resp.dados.dataNascimento)
+      let dataFalecimento = new Date(resp.dados.dataFalecimento)
+
       $('#foto').attr('src', urlFoto + resp.dados.id + '.jpg')
       $('#cpf').html(resp.dados.cpf)
       $('#nome-civil').html(resp.dados.nomeCivil)
-      $('#data-falecimento').html(resp.dados.dataFalecimento)
-      $('#data-nascimento').html(resp.dados.dataNascimento)
+      $('#data-falecimento').html(dataFalecimento.toLocaleDateString('pt-BR', dateOptions))
+      $('#data-nascimento').html(dataNascimento.toLocaleDateString('pt-BR', dateOptions))
       $('#escolaridade').html(resp.dados.escolaridade)
       $('#municipio-nascimento').html(resp.dados.municipioNascimento)
       $('#nome-civil').html(resp.dados.nomeCivil)
@@ -80,23 +89,30 @@ carregaProp = function (id) {
         return
       }
       respProp = resp.dados
+
+      console.log(respProp)
       $('#tabela-proposicoes tr').remove()
       resp.dados.map(function (prep, i) {
-        console.log('prep', prep)
-        let link = '<a class="linha-proposicoes">';
+        //console.log('prep', prep)
+        let link = '<a class="linha-proposicoes ">';
         let ano = '<td>' + link + tratarCamposVazios(prep.ano) + '</a></td>'
         let prepEmenta = prep.ementa.length > 20 ? prep.ementa.substr(0, 20) + '...' : prep.ementa
-        let ementa = '<td title="' + prep.ementa + '">' + link + prepEmenta + '</a></td>'
+        let ementa = '<td title="' + prep.ementa + ' data-toogle="tooltip">' + link + prepEmenta + '</a></td>'
         let numero = '<td>' + link + prep.numero + '</a></td>'
         let siglaTipo = '<td>' + link + prep.siglaTipo + '</a></td>'
 
-        let linha = '<tr>' + ano + ementa + numero + siglaTipo + '</tr>'
-
+        let linhaClick = '<tr class = "clickable" data-id=' + id + '>' + ano + ementa + numero + siglaTipo + '</tr>'
+        // let linhaSlide = '<tr class = "slide" data-id=' + id + '><div>' + prep.ementa + '</div></tr>'
+        let linhaSlide = ''
+        let linha = linhaClick + linhaSlide
+        console.log(linha)
         $('#tabela-proposicoes').children('tbody').append(linha)
       })
+      criaClick()
+
     },
     error: function (err) {
-      console.log('err', err)
+      console.error('err', err)
     }
   })
 }
@@ -124,9 +140,9 @@ carregaDesp = function (id) {
           style: "currency",
           currency: "BRL"
         })
-
+        let dataDocumento = new Date(desp.dataDocumento)
         let link = '<a class="linha-despesas">';
-        let dataAno = '<td>' + link + tratarCamposVazios(desp.dataDocumento) + '</a></td>'
+        let dataAno = '<td>' + link + tratarCamposVazios(dataDocumento.toLocaleDateString('pt-BR', dateOptions)) + '</a></td>'
         let nomeFornecedor = '<td title="' + desp.nomeFornecedor + '">' + link + prepNmForn + '</a></td>'
         let tipoDespesa = '<td title="' + desp.tipoDespesa + '">' + link + prepTpDesp + '</a></td>'
         let valorDocumento = '<td>' + link + valorDocTexto + '</a></td>'
@@ -138,7 +154,7 @@ carregaDesp = function (id) {
       })
     },
     error: function (err) {
-      console.log('err', err)
+      console.error('err', err)
     }
   })
 }
@@ -154,27 +170,23 @@ carregaEvent = function (id) {
       }
       respEvent = resp.dados
       $('#tabela-eventos tr').remove()
-      
+
       resp.dados.map(function (even, i) {
         let link = '<a class="linha-evento">'
-        let options = {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        };
+
         let dataIni = new Date(even.dataHoraFim)
         let dataFim = new Date(even.dataHoraFim)
 
         let tipo = '<td>' + link + even.descricaoTipo + '</a></td>'
         let descricao = '<td>' + link + even.descricao + '</a></td>'
-        let horaFim = '<td>' + link + tratarCamposVazios(dataIni.toLocaleDateString('pt-BR', options)) + '</a></td>'
-        let horaIni = '<td>' + link + tratarCamposVazios(dataFim.toLocaleDateString('pt-BR', options)) + '</a></td>'
+        let horaFim = '<td>' + link + tratarCamposVazios(dataIni.toLocaleDateString('pt-BR', dateOptions)) + '</a></td>'
+        let horaIni = '<td>' + link + tratarCamposVazios(dataFim.toLocaleDateString('pt-BR', dateOptions)) + '</a></td>'
         let localCamara = '<td>' + link + even.localCamara.nome + '</a></td>'
         let orgao = '<td>' + link + even.orgaos[0] + '</a></td>'
         let situacao = '<td>' + link + even.situacao + '</a></td>'
 
         let linha = '<tr>' + localCamara + tipo + descricao + horaIni + horaFim + '</tr>'
-        console.log(linha)
+        // console.log(linha)
         $('#tabela-eventos').children('tbody').append(linha)
       })
     },
