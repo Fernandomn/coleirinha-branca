@@ -20,18 +20,3 @@ criaClick = function () {
     $(this).next().toggle();
   });
 }
-// $('#testa-blocos').click(function () {
-//   $.ajax(
-//     {
-//       url: urlCamara + urlBlocos,
-//       type: 'GET',
-//       success: function (resp) {
-//         console.log('dados', resp.dados)
-//       },
-//       error: function (err) {
-//         console.log('err', err)
-//       }
-//     }
-//   )
-//   // .done()
-// });

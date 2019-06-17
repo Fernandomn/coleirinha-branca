@@ -198,6 +198,9 @@ carregaEvent = function (id) {
 
 $(document).on('click', '.linha-dept', function (e) {
   e.preventDefault()
+
+  $('#modal-deputados-area').load('../html/modalDeputados.html')
+
   let nome = $(this).data('nome')
   let id = $(this).data('id')
   let deptUrl = $(this).attr('href')
